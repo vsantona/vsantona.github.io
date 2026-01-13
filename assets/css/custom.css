@@ -1,0 +1,10 @@
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+#about {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+}
+

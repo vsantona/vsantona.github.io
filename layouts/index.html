@@ -1,0 +1,80 @@
+{{ define "main" }}
+
+<!-- Hero -->
+<section id="hero" style="padding:6rem 1rem; text-align:center;">
+    <div style="
+  width:180px;
+  height:180px;
+  margin:0 auto 2rem auto;
+  border-radius:50%;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+  padding:4px;
+  box-shadow: 0 0 40px rgba(99,102,241,0.6);
+">
+        <img src="/images/photo.jpg"
+             alt="Vincenzo Santonastaso"
+             style="
+         width:100%;
+         height:100%;
+         border-radius:50%;
+         object-fit:cover;
+         background:#111827;
+       "/>
+    </div>
+
+
+    <h1 style="
+  font-size:3.2rem;
+  font-weight:800;
+  margin-bottom:0.75rem;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+">
+        Welcome to my little corner of the internet
+    </h1> <p style="
+    font-size:3.2rem;
+    color:#9ca3af;
+    max-width:700px;
+    ">👋</p>
+
+    <p style="
+  font-size:1.25rem;
+  color:#9ca3af;
+  max-width:700px;
+  margin:0 auto;
+">
+        This is where I keep my thoughts about software, distributed systems,
+        things that sometimes work, and things that very much don’t —
+        plus a bit about the human behind the keyboard.
+    </p>
+</section>
+
+
+
+<!-- Recent Posts -->
+<section id="posts" class="py-16 max-w-4xl mx-auto px-4">
+    <h2 class="text-3xl font-bold mb-8">Ultimi articoli</h2>
+    <ul class="space-y-6">
+        {{ range first 5 (where .Site.RegularPages "Type" "posts") }}
+        <li>
+            <a href="{{ .RelPermalink }}" class="text-xl font-semibold text-blue-600 hover:underline">{{ .Title }}</a>
+            <p class="text-gray-600">{{ .Summary }}</p>
+        </li>
+        {{ end }}
+    </ul>
+</section>
+
+<!-- Social Links -->
+<section id="social" style="text-align:center; padding:2rem 0;">
+    <h3>Seguimi su</h3>
+    <div style="margin-top:1rem;">
+        {{ range .Site.Params.socialIcons }}
+        <a href="{{ .url }}" target="_blank" style="margin:0 14px; display:inline-block;">
+            {{ partial (printf "svg/%s.svg" .name) }}
+        </a>
+        {{ end }}
+    </div>
+</section>
+{{ end }}
+

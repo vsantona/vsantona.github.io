@@ -1,0 +1,36 @@
+baseURL = "https://vsantona.github.io/"
+languageCode = "en-us"
+defaultContentLanguage = "en"
+title = "Vincenzo Santonastaso"
+theme = "PaperMod"
+relativeURLs = true
+canonifyURLs = false
+
+[[menu.main]]
+name = "About"
+url = "/about/"
+weight = 10
+
+[[menu.main]]
+name = "Posts"
+url = "/posts/"
+weight = 20
+
+[[menu.main]]
+name = "Resume"
+url = "/resume/"
+weight = 3
+
+[params]
+customCSS = ["css/custom.css"]
+author = "Vincenzo Santonastaso"
+description = "Software Developer | Backend, Cloud, Architetture Moderne"
+showMenu = true
+
+[[params.socialIcons]]
+name = "github"
+url = "https://github.com/vsantona"
+
+[[params.socialIcons]]
+name = "linkedin"
+url = "https://www.linkedin.com/in/vincenzo-santonastaso-549945b1/"
