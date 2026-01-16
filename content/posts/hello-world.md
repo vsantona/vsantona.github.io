@@ -1,7 +1,0 @@
----
-title: "Hello World"
-date: 2026-01-12
-summary: "a summary of my first blog post"
----
-
-This is my first post on my new Hugo-powered blog 🚀

@@ -49,7 +49,7 @@ Scrum, Kanban, TDD, Software Design Documentation, Mentoring
 
 ## 🏗 Professional Experience
 
-### **Senior Product Engineer — lastminute.com**
+### **Senior Product Engineer - lastminute.com**
 *July 2022 – Present · Remote*
 
 Working on the transportation booking platform (B2B & B2C), developing external provider integrations and booking provisioning flows.
@@ -61,7 +61,7 @@ Working on the transportation booking platform (B2B & B2C), developing external 
 
 ---
 
-### **Staff Product Developer — BMC Software**
+### **Staff Product Developer - BMC Software**
 *Aug 2019 – July 2022 · Milan*
 
 Capacity Optimization platform for cloud and on-prem infrastructure.
@@ -72,7 +72,7 @@ Capacity Optimization platform for cloud and on-prem infrastructure.
 
 ---
 
-### **Product Developer — MotorK**
+### **Product Developer - MotorK**
 *Mar 2018 – Aug 2019 · Milan*
 
 Car stock management and advertising platform.
@@ -83,7 +83,7 @@ Car stock management and advertising platform.
 
 ---
 
-### **IT Consultant — Capgemini**
+### **IT Consultant - Capgemini**
 *Mar 2015 – Mar 2018 · Rome*
 
 Vodafone VPN provisioning and management platform.
@@ -126,15 +126,15 @@ Migrated legacy systems to Kafka-based asynchronous architectures using DDD-driv
 
 ## 🌍 Languages
 
-- Italian — Native
-- English — Professional working proficiency
+- Italian - Native
+- English - Professional working proficiency
 
 ---
 
 ## 🎓 Education
 
 **Bachelor’s Degree in Computer Science**  
-University of Salerno — 2014  
+University of Salerno - 2014  
 Final grade: 108/110
 
 ---
@@ -145,7 +145,7 @@ Final grade: 108/110
 
 ---
 
-## 🌱 Open Source — Debezium
+## 🌱 Open Source - Debezium
 
 Contributions:
 
