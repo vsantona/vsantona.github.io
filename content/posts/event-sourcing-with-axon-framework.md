@@ -31,7 +31,7 @@ Event Sourcing makes sense when audit trails are critical. Let's think about fin
 Or when the process matters as much as the outcome, like order fulfillment or approval workflows. 
 When you need to replay or reprocess past decisions for analytics or ML training data. When business rules change and you need to reinterpret tax calculations, pricing models, and things like that.
 
-When does it make *less* sense? Simple CRUD where the current state is all that matters. High throughput write scenarios with no historical value. Teams not ready for the mental overhead of eventual consistency. Tight deadlines with no time to learn the model.
+When does it make "less" sense? Simple CRUD where the current state is all that matters. High throughput write scenarios with no historical value. Teams not ready for the mental overhead of eventual consistency. Tight deadlines with no time to learn the model.
 
 Trade-offs? You're dealing with more complex queries, more moving parts, more storage. Every event is persisted forever. There's a learning curve you have to deal with.
 
