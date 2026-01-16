@@ -4,6 +4,7 @@ date = "2026-01-16T00:00:00Z"
 draft = false
 summary = "A pragmatic journey through Event Sourcing with Axon Framework, including real-world use cases, trade-offs, and when it makes sense."
 categories = ["posts"]
+author = "Vincenzo Santonastaso"
 +++
 
 # Event Sourcing with Axon Framework (and when it actually makes sense)
@@ -247,7 +248,6 @@ I'm still learning this stuff, honestly. Some days I love it. Some days I miss t
 
 _One thing I haven't covered here_: the whole "separate your reads from your writes" thing. That's CQRS, and it deserves its own conversation. Spoiler: it works really well with Event Sourcing, but you don't need one to use the other.
 
----
 
 ## Want to go deeper?
 
@@ -264,3 +264,11 @@ This book isn't specifically about Axon, but it's one of the better explanations
 **Domain-Driven Design**  
 by Eric Evans (Addison-Wesley)  
 The blue book. If you're going to do Event Sourcing seriously, you need to understand DDD.
+
+---
+
+**Code Repository**  
+All the code snippets shown in this article are available in a working demo project:  
+[https://github.com/vsantona/axon-demo](https://github.com/vsantona/axon-demo)
+
+---
