@@ -22,7 +22,6 @@ url = "/resume/"
 weight = 3
 
 [params]
-customCSS = ["css/custom.css"]
 author = "Vincenzo Santonastaso"
 description = "Software Developer | Backend, Cloud, Architetture Moderne"
 showMenu = true
@@ -34,3 +33,8 @@ url = "https://github.com/vsantona"
 [[params.socialIcons]]
 name = "linkedin"
 url = "https://www.linkedin.com/in/vincenzo-santonastaso-549945b1/"
+
+
+[[params.socialIcons]]
+name = "gmail"
+url = "mailto:vincenzo.santonastaso.it@gmail.com"
