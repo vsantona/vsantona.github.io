@@ -9,7 +9,7 @@ author = "Vincenzo Santonastaso"
 
 
 I've been playing with Event Sourcing for a while now, and I'll be honest: the first time I read about it, I thought everything was overcomplicated.
-"Just save the state, why do you need to store every single thing that happened?" 
+"_Just save the state, why do you need to store every single thing that happened_?" 
 But before understanding what it is, I think it's fundamental to understand what problems it tries to solve.
 
 ## What is Event Sourcing (really)?
@@ -17,11 +17,11 @@ But before understanding what it is, I think it's fundamental to understand what
 Think about your bank account. When you open your banking app, you see a balance. That's state. But how did you get there? You had deposits, withdrawals, transfers, fees. Those are events.
 
 Most systems only store the current balance. Done. Event Sourcing flips that: it stores every event that ever happened, and derives the current state by replaying them. 
-Your balance isn't stored directly; it's calculated from every transaction since you opened the account.
+Your balance isn't stored directly but it's calculated from every transaction since you opened the account.
 
-Why would anyone do this? Because in some domains, the events *are* the truth. The history matters. Auditing, compliance, debugging production issues, understanding user behavior, all of that becomes trivial when you have the full event log.
+Why would anyone do this? Because in some domains, **the events are the truth**. The history matters. Auditing, compliance, debugging production issues, understanding user behavior, all of that becomes trivial when you have the full event log.
 
-Of course, this sounds insane to most developers at first. "You're telling me I have to replay thousands of events just to know if a user has enough credit?" More or less. There are snapshots and optimizations for that.
+Of course, this sounds insane to most developers at first. "_You're telling me I have to replay thousands of events just to know if a user has enough credit?_" More or less but there are snapshots and optimizations for that.
 
 ## When should you use Event Sourcing?
 
@@ -249,7 +249,9 @@ Is it overkill for most projects? Absolutely. Should you use it everywhere? Abso
 
 I'm still learning this stuff, honestly. Some days I love it. Some days I miss the simplicity of `UPDATE products SET status = 'CONFIRMED'`. But for the right problems, it's an efficient way to model the domain.
 
-_One thing I haven't covered here_: the whole "separate your reads from your writes" thing. That's CQRS, and it deserves its own conversation. Spoiler: it works really well with Event Sourcing, but you don't need one to use the other.
+One thing I haven't covered here: the whole "separate your reads from your writes" thing. That's CQRS, and it deserves its own journey. 
+
+_Spoiler: it works really well with Event Sourcing, but you don't need one to use the other._
 
 
 ## Want to go deeper?
