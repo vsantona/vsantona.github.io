@@ -1,13 +1,13 @@
 +++
-title = "Event Sourcing with Axon Framework"
+title = "Axon Adventures Part 1 - Event Sourcing"
 date = "2026-01-16T00:00:00Z"
 draft = false
-summary = "A pragmatic journey through Event Sourcing with Axon Framework, including real-world use cases, trade-offs, and when it makes sense."
+summary = "We start our pragmatic journey through Axon Framework with Event Sourcing, including real-world use cases, trade-offs, and when it makes sense."
 categories = ["posts"]
 author = "Vincenzo Santonastaso"
 +++
 
-# Event Sourcing with Axon Framework (and when it actually makes sense)
+# Axon Adventures Part 1 - Event Sourcing
 
 I've been playing with Event Sourcing for a while now, and I'll be honest: the first time I read about it, I thought everything was overcomplicated.
 "Just save the state, why do you need to store every single thing that happened?" 
@@ -46,6 +46,8 @@ It doesn't make Event Sourcing easy, but it makes it survivable. You still have 
 
 
 ## Let's see a real use case: Product lifecycle
+
+
 
 Let's say you're building a system that manages product orders. A product goes through multiple stages: _reserved_, _confirmed_, _delivered_. Different teams interact with it. Support needs to know why a product got stuck. Finance needs to audit when things were confirmed and payment results.
 
@@ -129,8 +131,9 @@ class ProductAggregate() {
 ```
 
 See what's happening? Commands express intent. Events express facts. The aggregate enforces rules.
+Basically the aggregate receives commands, validates them, and emits events (using `apply(...)`). 
 
-When you load a `ProductAggregate` from the event store, Axon replays events rebuilding the state. You get full traceability for free (or at least that's the perception).
+When you load a `ProductAggregate` from the event store, Axon replays events rebuilding the state (using`@EventSourcingHandler` methods). You get full traceability for free (or at least that's the perception).
 
 For queries, you build projections:
 
@@ -237,8 +240,9 @@ The saga starts when a product is reserved, sends a payment charge command, wait
 
 And here's the upside: if business rules change, you can rebuild projections from scratch by replaying all events. Try doing that with a relational database where you've been mutating rows for three years.
 
+## Final thoughts
 
-Event Sourcing isn't a magic bullet. It won't make your codebase simpler. It won't make your queries faster. But it will make certain problems like auditing, compliance and complex workflows much more manageable.
+Event Sourcing isn't a silver bullet. It won't make your codebase simpler. It won't make your queries faster. But it will make certain problems like auditing, compliance and complex workflows much more manageable.
 
 Axon Framework handles the boring infrastructure stuff so you can focus on modeling your domain properly. It's opinionated, which is good when you're trying to learn a new paradigm.
 
