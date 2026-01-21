@@ -9,11 +9,16 @@ author = "Vincenzo Santonastaso"
 
 The first time someone brought up CQRS in a design discussion, my reaction was pretty much the same I had with Event Sourcing: *this feels like an over-engineered solution to a problem we probably don’t have*.
 
-After actually using it in a few real systems, my opinion changed. Not because CQRS is magic, but because, when applied with intent, it’s often just a way to stop your persistence model from collapsing under the weight of read requirements.
+After actually using it in a few real systems, my opinion changed. Not because CQRS is magic, but because, when applied with intent, it’s often just a way to separate write logic from read complexity.
 
-CQRS has a reputation problem. Mention it in a meeting and half the room assumes you’re proposing six months of refactoring. The other half mentally checks out. In reality, you’ve probably already implemented something CQRS stuff without realizing it.
+CQRS has a reputation problem. Mention it in a meeting and half the room assumes you’re proposing six months of refactoring. The other half mentally checks out. In reality, you’ve probably already implemented something CQRS without realizing it.
 
-I talked about Event Sourcing recently, and a few people asked about CQRS. They’re often mentioned together, but they solve different problems.
+In Part 1, I covered Event Sourcing. Now let's talk about CQRS. People often use them together, but they're solving different problems.
+
+
+> In Part 1 I covered Event Sourcing, and we focused on *how state changes are modeled and stored*.  
+In this article, we’ll focus on *how that state is queried and consumed*.
+People often use Event Sourcing and CQRS together, but they're solving different problems
 
 ## What is CQRS?
 
@@ -25,16 +30,16 @@ You run **queries** against read models designed for fast, convenient access.
 
 Those models don’t have to look the same. They don’t even have to share a database.
 
-A couple of important clarifications, because this is where my confusion usually starts:
+A couple of important clarifications, because this is where confusion usually starts:
 
 **CQRS is not Event Sourcing.**  
-You can use CQRS with a traditional database. You can use Event Sourcing without CQRS. They work well together, but one doesn’t require the other.
+You can use CQRS with a traditional database. You can use Event Sourcing without CQRS. They work well together, but one doesn't require the other.
 
-**CQRS is not microservices.**  
+**CQRS is not microservices.**
 You can apply CQRS inside a monolith. One codebase, one deployment. This is about separation of concerns, not architecture diagrams.
 
-Most applications use a single model for everything. You load an entity, mutate it, and query it back. That’s fine, until the write model starts accumulating fields that only exist for reporting, dashboards, or API responses. 
-At that point, the model stops representing the domain and starts representing query’s needs.
+Most applications use a single model for everything. You load an entity, mutate it, and query it back. That’s fine, until the write model starts accumulating fields that only exist for reporting, dashboards, or API responses.  
+At that point, the model stops representing the domain and starts representing query needs.
 
 ## When does CQRS make sense?
 
@@ -46,7 +51,7 @@ If your write operations involve state transitions, invariants, and rules that *
 
 It also helps when different parts of your system need different views of the same data. Your API may need basic info, your dashboard needs detailed history, analytics needs summaries. They all work with the same domain, just shaped differently.
 
-When should you skip CQRS? If you're building simple CRUD apps with small datasets, it's probably overkill. If your team is already stretched, the extra complexity might not be worth it. And if your current read and write models work fine together, CQRS won't make things better.
+_When should you skip CQRS?_  If you're building simple CRUD apps with small datasets, it's probably overkill. If your team is already stretched, the extra complexity might not be worth it. And if your current read and write models work fine together, CQRS won't make things better.
 
 Don't use CQRS just because it sounds impressive. Use it when it solves a real problem you're already dealing with.
 
@@ -68,15 +73,17 @@ This doesn't make your system simpler. It separates two different kinds of compl
 
 ## Real use case: Product lifecycle
 
-Let’s reuse the same product lifecycle example from the Event Sourcing article. A product moves through states: reserved, confirmed, delivered. Different people need different views of that lifecycle.
+Let’s return to our product lifecycle example from the Event Sourcing article. A product moves through states: reserved, confirmed, delivered. Different people need different views of that lifecycle.
 
 Support wants to know *what happened and when*.  
 The public API just needs the current status.  
-Analytics wants counts and trends.
+Analytics wants aggregated data and historical trends.
 
 With a single model, you end up making compromises. You add fields just for reports. Your queries get more complicated. You add more indexes. And your write operations slow down because they're dealing with stuff that only matters for reading.
 
 This is the core problem CQRS addresses: the write model and read models want different things.
+
+> This article uses Event Sourcing examples to build on Part 1. However, CQRS does not require events. You can implement CQRS with any persistence mechanism, relational databases, document stores, or key-value stores.
 
 ## Solving the problem with CQRS
 
@@ -202,7 +209,7 @@ class ProductDetailProjection(private val jdbcTemplate: JdbcTemplate) {
     @EventHandler
     fun on(event: ProductReservedEvent) {
         jdbcTemplate.update(
-            "INSERT INTO product_view (product_id, status, customer_id, amount, reserved_at) VALUES (?, ?, ?, ?, ?)",
+            "INSERT INTO product_detail_view (product_id, status, customer_id, amount, reserved_at) VALUES (?, ?, ?, ?, ?)",
             event.productId, "RESERVED", event.customerId, event.amount, Instant.now()
         )
     }
@@ -210,7 +217,7 @@ class ProductDetailProjection(private val jdbcTemplate: JdbcTemplate) {
     @EventHandler
     fun on(event: ProductConfirmedEvent) {
         jdbcTemplate.update(
-            "UPDATE product_view SET status = ?, confirmed_at = ? WHERE product_id = ?",
+            "UPDATE product_detail_view SET status = ?, confirmed_at = ? WHERE product_id = ?",
             "CONFIRMED", Instant.now(), event.productId
         )
     }
@@ -218,7 +225,7 @@ class ProductDetailProjection(private val jdbcTemplate: JdbcTemplate) {
     @EventHandler
     fun on(event: ProductDeliveredEvent) {
         jdbcTemplate.update(
-            "UPDATE product_view SET status = ?, delivered_at = ? WHERE product_id = ?",
+            "UPDATE product_detail_view SET status = ?, delivered_at = ? WHERE product_id = ?",
             "DELIVERED", Instant.now(), event.productId
         )
     }
@@ -226,7 +233,7 @@ class ProductDetailProjection(private val jdbcTemplate: JdbcTemplate) {
     @QueryHandler
     fun handle(query: GetProductDetailQuery): ProductDetailView? {
         return jdbcTemplate.queryForObject(
-            "SELECT * FROM product_view WHERE product_id = ?",
+            "SELECT * FROM product_detail_view WHERE product_id = ?",
             { rs, _ ->
                 ProductDetailView(
                     productId = rs.getString("product_id"),
@@ -322,6 +329,7 @@ class ProductExportProjection(
 
 
 Same events. Same domain. Completely different read needs.
+> Projections like this must be designed to handle replays (idempotency, offsets, or reset strategies). Otherwise, rebuilding projections would duplicate exports.
 
 Each projection evolves independently. You can add a new one without touching the aggregate. You can delete one without breaking the system. That’s the real value of CQRS.
 
