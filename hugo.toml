@@ -23,7 +23,7 @@ weight = 3
 
 [params]
 author = "Vincenzo Santonastaso"
-description = "Software Developer | Backend, Cloud, Architetture Moderne"
+description = "Software Developer"
 showMenu = true
 
 [[params.socialIcons]]
